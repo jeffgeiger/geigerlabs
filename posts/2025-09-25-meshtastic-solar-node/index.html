@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Cheap Meshtastic Solar Node · Geiger Labs</title>
+  <meta name="description" content="Notes, build logs, and project write-ups from the labs. A little bit of everything." />
+  <link rel="alternate" type="application/rss+xml" title="Geiger Labs" href="/feed.xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <script>
+    // Apply theme before paint to avoid flash
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </span>
+        Geiger Labs
+      </a>
+      <nav class="site-nav">
+        
+          <a href="/tags/">Tags</a>
+        
+          <a href="/about/">About</a>
+        
+          <a href="/feed.xml">RSS</a>
+        
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+  <header class="post-header">
+<div class="post-meta">
+  
+  
+  
+  
+  <span class="badge badge-project">project</span>
+  <time datetime="2025-09-22">2025-09-22</time>
+  <span class="read-time">5 min read</span>
+  
+</div>    
+  <h1>Super Cheap Meshtastic Solar Node</h1>
+    
+      <div class="post-tags">
+        
+          
+        
+          <a class="tag" href="/tags/meshtastic/">meshtastic</a>
+        
+          <a class="tag" href="/tags/solar/">solar</a>
+        
+          <a class="tag" href="/tags/hardware/">hardware</a>
+        
+          <a class="tag" href="/tags/lora/">lora</a>
+        
+      </div>
+    
+  </header>
+
+  <p><strong>First things first:</strong> I’m standing on the shoulders of giants with this. It wasn’t my idea, I’m just documenting my build following the excellent guide from <a href="https://buffalora.org/2025/06/07/homemade-inexpensive-outdoor-solar-node/">BuffaLoRa</a>.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8139-large-320w-39Co9F.avif 320w, /img/img-8139-large-640w-39Co9F.avif 640w, /img/img-8139-large-960w-39Co9F.avif 960w, /img/img-8139-large-1280w-39Co9F.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8139-large-320w-39Co9F.webp 320w, /img/img-8139-large-640w-39Co9F.webp 640w, /img/img-8139-large-960w-39Co9F.webp 960w, /img/img-8139-large-1280w-39Co9F.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8139-large-320w-39Co9F.jpeg" alt="Solar-powered Meshtastic node hanging on house siding for testing" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8139-large-320w-39Co9F.jpeg 320w, /img/img-8139-large-640w-39Co9F.jpeg 640w, /img/img-8139-large-960w-39Co9F.jpeg 960w, /img/img-8139-large-1280w-39Co9F.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<h6>Hanging on the siding while I test charging and stability</h6>
+<hr>
+<h3 id="parts-list" tabindex="-1"><a class="header-anchor" href="#parts-list">Parts List</a></h3>
+<ul>
+<li><a href="https://www.seeedstudio.com/XIAO-nRF52840-Wio-SX1262-Kit-for-Meshtastic-p-6400.html">The radio</a></li>
+<li><a href="https://www.homedepot.com/p/Deck-Impressions-Solar-White-LED-Landscape-Gutter-Light-2-Pack-50220/317148691">The solar part</a></li>
+<li><a href="https://www.amazon.com/dp/B0D47HVCK7">The antenna</a></li>
+<li><a href="https://www.amazon.com/dp/B07NWD5NTN">Some wires</a></li>
+</ul>
+<hr>
+<h3 id="flash-your-radio-and-set-it-up" tabindex="-1"><a class="header-anchor" href="#flash-your-radio-and-set-it-up">Flash your radio and set it up</a></h3>
+<p>Go ahead and flash your radio before you really dive in. (<em>Make sure you leave the <s>crappy little</s> antenna it comes with connected so you don’t fry the radio.</em>)</p>
+<p><picture><source type="image/avif" srcset="/img/img-8232-large-320w-LRBdYk.avif 320w, /img/img-8232-large-640w-LRBdYk.avif 640w, /img/img-8232-large-960w-LRBdYk.avif 960w, /img/img-8232-large-1280w-LRBdYk.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8232-large-320w-LRBdYk.webp 320w, /img/img-8232-large-640w-LRBdYk.webp 640w, /img/img-8232-large-960w-LRBdYk.webp 960w, /img/img-8232-large-1280w-LRBdYk.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8232-large-320w-LRBdYk.jpeg" alt="Xiao nRF52840 with Wio SX1262 module, very small in hand for scale" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8232-large-320w-LRBdYk.jpeg 320w, /img/img-8232-large-640w-LRBdYk.jpeg 640w, /img/img-8232-large-960w-LRBdYk.jpeg 960w, /img/img-8232-large-1280w-LRBdYk.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>I went ahead and configured everything about my node at this step so I could move quickly to testing and hanging it up once the build was done.</p>
+<h3 id="let-s-build-this-thing" tabindex="-1"><a class="header-anchor" href="#let-s-build-this-thing">Let’s build this thing…</a></h3>
+<p><strong>Tip:</strong> Install the brackets right away so you don’t forget like I did on my first build.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8135-large-320w-ngoj4f.avif 320w, /img/img-8135-large-640w-ngoj4f.avif 640w, /img/img-8135-large-960w-ngoj4f.avif 960w, /img/img-8135-large-1280w-ngoj4f.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8135-large-320w-ngoj4f.webp 320w, /img/img-8135-large-640w-ngoj4f.webp 640w, /img/img-8135-large-960w-ngoj4f.webp 960w, /img/img-8135-large-1280w-ngoj4f.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8135-large-320w-ngoj4f.jpeg" alt="Solar gutter light disassembled, ready to begin the build" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8135-large-320w-ngoj4f.jpeg 320w, /img/img-8135-large-640w-ngoj4f.jpeg 640w, /img/img-8135-large-960w-ngoj4f.jpeg 960w, /img/img-8135-large-1280w-ngoj4f.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Make a note of which end is positive — I know the negative end has a spring, etc, but belt and suspenders. Then take the battery out and set it aside.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8234-large-320w-LQoQlQ.avif 320w, /img/img-8234-large-640w-LQoQlQ.avif 640w, /img/img-8234-large-960w-LQoQlQ.avif 960w, /img/img-8234-large-1280w-LQoQlQ.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8234-large-320w-LQoQlQ.webp 320w, /img/img-8234-large-640w-LQoQlQ.webp 640w, /img/img-8234-large-960w-LQoQlQ.webp 960w, /img/img-8234-large-1280w-LQoQlQ.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8234-large-320w-LQoQlQ.jpeg" alt="Battery compartment showing positive and negative terminals" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8234-large-320w-LQoQlQ.jpeg 320w, /img/img-8234-large-640w-LQoQlQ.jpeg 640w, /img/img-8234-large-960w-LQoQlQ.jpeg 960w, /img/img-8234-large-1280w-LQoQlQ.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>If you don’t plan on using the lights, clip one of the leads going to them. I confirmed that the battery doesn’t charge if you don’t have the switch in the “ON” position, so if you don’t want lights draining the battery overnight, or just lights in a weird place around your house, go ahead and snip that now.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8236-large-320w-VXjwaP.avif 320w, /img/img-8236-large-640w-VXjwaP.avif 640w, /img/img-8236-large-960w-VXjwaP.avif 960w, /img/img-8236-large-1280w-VXjwaP.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8236-large-320w-VXjwaP.webp 320w, /img/img-8236-large-640w-VXjwaP.webp 640w, /img/img-8236-large-960w-VXjwaP.webp 960w, /img/img-8236-large-1280w-VXjwaP.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8236-large-320w-VXjwaP.jpeg" alt="Snipping the lead going to the LED lights" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8236-large-320w-VXjwaP.jpeg 320w, /img/img-8236-large-640w-VXjwaP.jpeg 640w, /img/img-8236-large-960w-VXjwaP.jpeg 960w, /img/img-8236-large-1280w-VXjwaP.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Solder the power leads to the battery contacts. My leads were already tinned, so I was able to just sit them on there and give it a boop with the soldering iron and they sunk right in.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8237-large-320w-UA-4yV.avif 320w, /img/img-8237-large-640w-UA-4yV.avif 640w, /img/img-8237-large-960w-UA-4yV.avif 960w, /img/img-8237-large-1280w-UA-4yV.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8237-large-320w-UA-4yV.webp 320w, /img/img-8237-large-640w-UA-4yV.webp 640w, /img/img-8237-large-960w-UA-4yV.webp 960w, /img/img-8237-large-1280w-UA-4yV.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8237-large-320w-UA-4yV.jpeg" alt="Power leads soldered to battery contacts" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8237-large-320w-UA-4yV.jpeg 320w, /img/img-8237-large-640w-UA-4yV.jpeg 640w, /img/img-8237-large-960w-UA-4yV.jpeg 960w, /img/img-8237-large-1280w-UA-4yV.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Separate the Xiao module from the Wio module.</p>
+<p>Solder the connector to the battery leads of the Xiao module. This is teeny tiny, so if you have bad eyes and shaky hands like I do, take a deep breath and just try your best. On my first one, the tinned leads just stuck to the pads. On the second one, there was much wailing and gnashing of teeth, but I put a little solder on each pad and then was able to get the wires to stick. YMMV.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8233-large-320w-hRdwpb.avif 320w, /img/img-8233-large-640w-hRdwpb.avif 640w, /img/img-8233-large-960w-hRdwpb.avif 960w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8233-large-320w-hRdwpb.webp 320w, /img/img-8233-large-640w-hRdwpb.webp 640w, /img/img-8233-large-960w-hRdwpb.webp 960w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8233-large-320w-hRdwpb.jpeg" alt="Xiao module separated from Wio module, showing tiny battery pads" loading="lazy" decoding="async" width="960" height="1217" srcset="/img/img-8233-large-320w-hRdwpb.jpeg 320w, /img/img-8233-large-640w-hRdwpb.jpeg 640w, /img/img-8233-large-960w-hRdwpb.jpeg 960w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p><picture><source type="image/avif" srcset="/img/img-8240-large-320w-vHjDOh.avif 320w, /img/img-8240-large-640w-vHjDOh.avif 640w, /img/img-8240-large-960w-vHjDOh.avif 960w, /img/img-8240-large-1280w-vHjDOh.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8240-large-320w-vHjDOh.webp 320w, /img/img-8240-large-640w-vHjDOh.webp 640w, /img/img-8240-large-960w-vHjDOh.webp 960w, /img/img-8240-large-1280w-vHjDOh.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8240-large-320w-vHjDOh.jpeg" alt="Battery wires successfully soldered to Xiao module pads" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8240-large-320w-vHjDOh.jpeg 320w, /img/img-8240-large-640w-vHjDOh.jpeg 640w, /img/img-8240-large-960w-vHjDOh.jpeg 960w, /img/img-8240-large-1280w-vHjDOh.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Once you have the wires soldered to the Xiao, you can connect the pigtail to the Wio and put them back together.</p>
+<p>Now it’s time to make a hole for your external antenna. I know that’s optional, but it’s what I did. I measured roughly to the middle, both ways. If your pigtails are long enough, you can put it on whichever end makes the most sense for you. (Note: It’s a little crowded on the end with the charge controller.) Use a 1/4&quot; bit. (Probably double check that, but that’s what worked for me.)</p>
+<p><picture><source type="image/avif" srcset="/img/img-8241-large-320w-yyxReN.avif 320w, /img/img-8241-large-640w-yyxReN.avif 640w, /img/img-8241-large-960w-yyxReN.avif 960w, /img/img-8241-large-1280w-yyxReN.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8241-large-320w-yyxReN.webp 320w, /img/img-8241-large-640w-yyxReN.webp 640w, /img/img-8241-large-960w-yyxReN.webp 960w, /img/img-8241-large-1280w-yyxReN.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8241-large-320w-yyxReN.jpeg" alt="Drilled hole on the outside of the housing for external antenna" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8241-large-320w-yyxReN.jpeg 320w, /img/img-8241-large-640w-yyxReN.jpeg 640w, /img/img-8241-large-960w-yyxReN.jpeg 960w, /img/img-8241-large-1280w-yyxReN.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>I had to trim around the hole with a razor on the inside because there was a considerable burr:</p>
+<p><picture><source type="image/avif" srcset="/img/img-8242-large-320w-v6EU12.avif 320w, /img/img-8242-large-640w-v6EU12.avif 640w, /img/img-8242-large-960w-v6EU12.avif 960w, /img/img-8242-large-1280w-v6EU12.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8242-large-320w-v6EU12.webp 320w, /img/img-8242-large-640w-v6EU12.webp 640w, /img/img-8242-large-960w-v6EU12.webp 960w, /img/img-8242-large-1280w-v6EU12.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8242-large-320w-v6EU12.jpeg" alt="Inside view of the drilled hole, showing burr that needed trimming" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8242-large-320w-v6EU12.jpeg 320w, /img/img-8242-large-640w-v6EU12.jpeg 640w, /img/img-8242-large-960w-v6EU12.jpeg 960w, /img/img-8242-large-1280w-v6EU12.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Put it all together. Connect the battery leads and install the antenna through the side.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8243-large-320w-NiRRgW.avif 320w, /img/img-8243-large-640w-NiRRgW.avif 640w, /img/img-8243-large-960w-NiRRgW.avif 960w, /img/img-8243-large-1280w-NiRRgW.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8243-large-320w-NiRRgW.webp 320w, /img/img-8243-large-640w-NiRRgW.webp 640w, /img/img-8243-large-960w-NiRRgW.webp 960w, /img/img-8243-large-1280w-NiRRgW.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8243-large-320w-NiRRgW.jpeg" alt="Components assembled inside housing with antenna installed" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8243-large-320w-NiRRgW.jpeg 320w, /img/img-8243-large-640w-NiRRgW.jpeg 640w, /img/img-8243-large-960w-NiRRgW.jpeg 960w, /img/img-8243-large-1280w-NiRRgW.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Pop the battery back in and make sure everything comes up.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8246-large-320w-o5ElKN.avif 320w, /img/img-8246-large-640w-o5ElKN.avif 640w, /img/img-8246-large-960w-o5ElKN.avif 960w, /img/img-8246-large-1280w-o5ElKN.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8246-large-320w-o5ElKN.webp 320w, /img/img-8246-large-640w-o5ElKN.webp 640w, /img/img-8246-large-960w-o5ElKN.webp 960w, /img/img-8246-large-1280w-o5ElKN.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8246-large-320w-o5ElKN.jpeg" alt="Battery reinstalled, doing a final functional check before closing" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8246-large-320w-o5ElKN.jpeg 320w, /img/img-8246-large-640w-o5ElKN.jpeg 640w, /img/img-8246-large-960w-o5ElKN.jpeg 960w, /img/img-8246-large-1280w-o5ElKN.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>Install the light cover again and it’s ready to go.</p>
+<p><picture><source type="image/avif" srcset="/img/img-8247-large-320w-GdfW1d.avif 320w, /img/img-8247-large-640w-GdfW1d.avif 640w, /img/img-8247-large-960w-GdfW1d.avif 960w, /img/img-8247-large-1280w-GdfW1d.avif 1280w" sizes="(min-width: 800px) 800px, 100vw"><source type="image/webp" srcset="/img/img-8247-large-320w-GdfW1d.webp 320w, /img/img-8247-large-640w-GdfW1d.webp 640w, /img/img-8247-large-960w-GdfW1d.webp 960w, /img/img-8247-large-1280w-GdfW1d.webp 1280w" sizes="(min-width: 800px) 800px, 100vw"><img src="/img/img-8247-large-320w-GdfW1d.jpeg" alt="Finished solar Meshtastic node, fully assembled" loading="lazy" decoding="async" width="1280" height="960" srcset="/img/img-8247-large-320w-GdfW1d.jpeg 320w, /img/img-8247-large-640w-GdfW1d.jpeg 640w, /img/img-8247-large-960w-GdfW1d.jpeg 960w, /img/img-8247-large-1280w-GdfW1d.jpeg 1280w" sizes="(min-width: 800px) 800px, 100vw"></picture></p>
+<p>That’s pretty much it. Good luck.</p>
+
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© 2026 Jeff · Geiger Labs</span> 
+      <div class="footer-links">
+        <a href="https://github.com/jeffgeiger">GitHub</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="/about/">About</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('themeToggle').addEventListener('click', function () {
+      var root = document.documentElement;
+      var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      localStorage.setItem('theme', next);
+    });
+  </script>
+</body>
+</html>
